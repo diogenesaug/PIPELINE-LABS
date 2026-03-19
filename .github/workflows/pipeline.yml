@@ -14,7 +14,7 @@ jobs:
     
     steps:
       - name: "Checkout do Código"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: "Listando a Estrutura .github/workflows"
         run: |
