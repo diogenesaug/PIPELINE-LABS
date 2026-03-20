@@ -1,45 +1,37 @@
-name: "Estrutura de Diretorios e Arquivos"
+name: Hello GitHub Actions
+
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
-env:
-  NODE_VERSION: "18"
-
 jobs:
-  demonstrando_estrutura:
-    name: "Demonstrando a Estrutura Básica"
+  hello_world:
     runs-on: ubuntu-latest
     
     steps:
-      - name: "Checkout do Código"
-        uses: actions/checkout@v6
+      - name: Checkout Código
+        uses: actions/checkout@v4
+      
+      - name: Executar hello world
+        run: echo "Hello, GitHub Actions!"
+      
+      - name: Mostrar informações do sistema
+        run: |
+          echo "Sistema Operacional: ${{ runner.os }}"
+          echo "Versão do Kernel: ${{ runner.arch }}"
+          echo "Arquitetura: ${{ runner.arch }}"
+          echo "Diretório Atual: $(pwd)"
+          echo "Data Atual: $(date)"
+          echo "Usuário Atual: $(whoami)"
 
-      - name: "Listando a Estrutura .github/workflows"
-        run: |
-          echo "== Estrutura de Diretórios e Arquivos .github/workflows =="
-          ls -la .github/workflows
-          echo " "
-          echo "Total de workflows: $(ls -1 .github/workflows | wc -l)"
+      - name: Listar arquivos do repositório
+        run: ls -la
 
-      - name: "Elementos Obrigatórios do workflow"
+      - name: Comandos Múltiplos
         run: |
-          echo "== Elementos Obrigatórios de um Workflow =="
-          echo "1. name: Nome do Workflow"
-          echo "2. on: Evento que aciona o Workflow"
-          echo "3. jobs: Conjunto de tarefas a serem executadas"
-          echo "4. runs-on: Ambiente onde as tarefas serão executadas"
-          echo "5. steps: Passos individuais dentro de cada job"
-          echo ""
-          echo " Total de elementos obrigatórios: 5"
-        
-      - name: "Variáveis e Contexto"
-        run: |
-          echo "== VARIAVEIS E CONTEXTO =="
-          echo "Variáveis env: ${{ env.NODE_VERSION }}"
-          echo "1. env: Definição de variáveis de ambiente "
-          echo "2. contextos: Acesso a informações sobre o evento, repositório, etc."
-          echo ""
-          echo "Total de variáveis e contextos: 2"
-          
+          echo "Este é o LAB 01 do curso de GitHub Actions"
+          echo "Workflow executado com sucesso!"
+          echo "Pronto para os próximos desafios!"
