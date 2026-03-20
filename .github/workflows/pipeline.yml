@@ -13,7 +13,7 @@ jobs:
     
     steps:
       - name: Checkout Código
-        uses: actions/checkout@v8
+        uses: actions/checkout@v6
       
       - name: Executar hello world
         run: echo "Hello, GitHub Actions!"
