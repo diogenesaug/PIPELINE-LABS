@@ -24,6 +24,15 @@ jobs:
           echo ""
           echo "Total de arquivos e diretórios: $(ls -1 .github/workflows/*.yaml 2>/dev/null | wc -l)"
 
+      - name: "Elementos obrigatórios do workflow"
+        run: |
+          echo "=== ELEMENTOS OBRIGATÓRIOS ==="
+          echo "1. name: Nome do workflow"
+          echo "2. on: Evento(s) que disparam o workflow"
+          echo "3. jobs: Conjunto de tarefas a serem executadas"
+          echo "4. runs-on: Ambiente de execução"
+          echo "5. steps: Passos a serem executados dentro de cada job"
+
       - name: "Variáveis e contextos"
         run: |
           echo "=== VARIÁVEIS e CONTEXTOS ==="
