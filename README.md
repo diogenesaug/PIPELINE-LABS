@@ -1,1 +1,48 @@
 # PIPELINE-LABS
+# LAB 01
+name: "Estrutura de Diretorios e Arquivos"
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: "18"
+
+jobs:
+  demonstrar-estrutura:
+    name: "Demonstrar Estrutura Básica"
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: "Checkout do código"
+        uses: actions/checkout@v5
+
+      - name: "Mostrar estrutura .github/workflows"
+        run: |
+          echo "=== ESTRUTURA DO DIRETÓRIO .github/workflows ==="
+          ls -la .github/workflows
+          echo ""
+          echo "Total de arquivos e diretórios: $(ls -1 .github/workflows/*.yaml 2>/dev/null | wc -l)"
+
+      - name: "Elementos obrigatórios do workflow"
+        run: |
+          echo "=== ELEMENTOS OBRIGATÓRIOS ==="
+          echo "1. name: Nome do workflow"
+          echo "2. on: Evento(s) que disparam o workflow"
+          echo "3. jobs: Conjunto de tarefas a serem executadas"
+          echo "4. runs-on: Ambiente de execução"
+          echo "5. steps: Passos a serem executados dentro de cada job"
+
+      - name: "Variáveis e contextos"
+        run: |
+          echo "=== VARIÁVEIS e CONTEXTOS ==="
+          echo "NODE_VERSION: ${{ env.NODE_VERSION }}"
+          echo "GITHUB_WORKSPACE: ${{ github.workspace }}"
+          echo "GITHUB_REPOSITORY: ${{ github.repository }}"
+          echo "GITHUB_REF: ${{ github.ref }}"
+          echo "GITHUB_SHA: ${{ github.sha }}"
+          echo "GITHUB_ACTOR: ${{ github.actor }}"
+          echo "GITHUB_EVENT_NAME: ${{ github.event_name }}"
+          echo "GITHUB_EVENT_PATH: ${{ github.event_path }}"
