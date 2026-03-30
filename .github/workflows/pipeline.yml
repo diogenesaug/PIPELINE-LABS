@@ -1,31 +1,31 @@
+name: Issue Trigger Workflow
+# Permissões para comentarios automaticos
+permissions:
+  issues: write
 on:
-  schedule:
-    # Executa as 00:00 (UTC) todos os dias, o que corresponde a 20:00 no horário de Brasília
-    - cron: '07 00 * * *' # Runs every day at midnight
-  workflow_dispatch: # Permite execução manual do workflow
-
+  issues:
+    types: [opened, edited, closed, labeled]
 jobs:
-  scheduler-job:
+  issue-on:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout código
-        uses: actions/checkout@v5
-
-      - name: Informação do Schedule
+      - name: Informações da Issue
         run: |
-          echo "Workflow disparado por schedule"
-          echo "Data e hora atual: $(date)"
-          echo "Hora UTC: $(date -u)"
-          echo "Timezone local: $(date +%Z)"
+          echo "workflow disparado por ISSUE"
+          echo "Ação: ${{ github.event.action }}"
+          echo "Issue: ${{ github.event.issue.title }}"
+          echo "Criada por: ${{ github.event.issue.user.login }}"
+          echo "Labels: ${{ join(github.event.issue.labels.*.name, ', ') }}"
       
-      
-      - name: Relatório de dependências    
-        run: |
-          echo "RELATÓRIO DE DEPENDÊNCIAS"
-          echo "-----------------------"
-          echo "Total de commits: $(git rev-list --all --count)"
-          echo "Contribuidores únicos: $(git shortlog -s -n | wc -l)"
-          echo "Último commit: $(git log -1 --pretty=format:'%h - %s (%an, %ar)')"
-
-          
+      - name: Resposta automática (nova issue)
+        if: github.event.action == 'opened'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            git.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Olá @${context.payload.issue.user.login}, obrigado por abrir esta issue! Nossa equipe irá analisar e responder em breve.`
+            })
