@@ -46,3 +46,37 @@ jobs:
           echo "GITHUB_ACTOR: ${{ github.actor }}"
           echo "GITHUB_EVENT_NAME: ${{ github.event_name }}"
           echo "GITHUB_EVENT_PATH: ${{ github.event_path }}"
+
+          ========== Arquivo 2 =================
+
+          on:
+  schedule:
+    # Executa as 00:00 (UTC) todos os dias, o que corresponde a 20:00 no horário de Brasília
+    - cron: '07 00 * * *' # Runs every day at midnight
+  workflow_dispatch: # Permite execução manual do workflow
+
+jobs:
+  scheduler-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v5
+
+      - name: Informação do Schedule
+        run: |
+          echo "Workflow disparado por schedule"
+          echo "Data e hora atual: $(date)"
+          echo "Hora UTC: $(date -u)"
+          echo "Timezone local: $(date +%Z)"
+      
+      
+      - name: Relatório de dependências    
+        run: |
+          echo "RELATÓRIO DE DEPENDÊNCIAS"
+          echo "-----------------------"
+          echo "Total de commits: $(git rev-list --all --count)"
+          echo "Contribuidores únicos: $(git shortlog -s -n | wc -l)"
+          echo "Último commit: $(git log -1 --pretty=format:'%h - %s (%an, %ar)')"
+
+          
