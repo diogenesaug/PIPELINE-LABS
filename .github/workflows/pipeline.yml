@@ -12,7 +12,7 @@ jobs:
     
     steps:
     - name: Checkout código
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
     
     - name: Análise de sintaxe
       run: |
@@ -38,7 +38,7 @@ jobs:
     
     steps:
     - name: Checkout código
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
     
     - name: Configurar ambiente de testes
       run: |
@@ -64,7 +64,7 @@ jobs:
     
     steps:
     - name: Checkout código
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
     
     - name: Configurar ambiente de build
       run: |
@@ -86,7 +86,7 @@ jobs:
         echo "Artefatos gerados"
     
     - name: Upload artefatos
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: build-artifacts
         path: build/
