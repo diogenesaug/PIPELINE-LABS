@@ -80,3 +80,67 @@ jobs:
           echo "Último commit: $(git log -1 --pretty=format:'%h - %s (%an, %ar)')"
 
           
+name: Matrix Strategy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  # Job com matrix para múltiplos ambientes
+  test-matrix:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false # Continua rodando os outros jobs mesmo se um falhar
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [20, 22, 24]
+        include:
+          - os: ubuntu-latest
+            node-version: 20
+            experimental: true
+        exclude:
+          - os: windows-latest
+            node-version: 24
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v6
+    - name: Informações da matriz
+      run: |
+        echo "OS: ${{ matrix.os }}"
+        echo "Node: ${{ matrix.node-version }}"
+        echo "Experimental: ${{ matrix.experimental }}"
+       
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+      
+    - name: Verificar versões
+      run: |
+        echo "Node version: $(node --version)"
+        echo "NPM version: $(npm --version)"
+    - name: Executar testes específicos do OS
+      run: |
+        echo "Executando testes no ${{ matrix.os }} com Node ${{ matrix.node-version }}..."
+        sleep 5
+        echo "Testes concluídos no ${{ matrix.os }} com Node ${{ matrix.node-version }}."
+    - name: Verificar experimental
+      if: ${{ matrix.experimental == 'true' }}
+      run: |
+        echo "Executando testes experimentais..."
+        sleep 5
+        echo "Testes experimentais concluídos."
+    #  Job coletar resultados da matrix
+  collect-results:
+    runs-on: ubuntu-latest
+    needs: test-matrix
+    steps:
+    - name: Coletar resultados
+      run: |
+        echo "Coletando resultados de todos os jobs da matrix..."
+        sleep 5
+        echo "Todos os testes da matrix foram executados."
+        
