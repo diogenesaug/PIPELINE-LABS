@@ -79,9 +79,10 @@ jobs:
           echo "Contribuidores únicos: $(git shortlog -s -n | wc -l)"
           echo "Último commit: $(git log -1 --pretty=format:'%h - %s (%an, %ar)')"
 
-          
+    
 name: Matrix Strategy
 
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 on:
   push:
     branches: [main]
@@ -143,4 +144,3 @@ jobs:
         echo "Coletando resultados de todos os jobs da matrix..."
         sleep 5
         echo "Todos os testes da matrix foram executados."
-        
