@@ -37,7 +37,7 @@ jobs:
           echo "Porta: $DB_PORT"
           echo "Usuário: $DB_USERNAME"
           echo "Senha: $DB_PASSWORD"
-          echo "Observe que a senha será mascarada nos logs!
+          echo "Observe que a senha será mascarada nos logs!"
           echo "vamos"
 
       # Step 4: Usar secret em um token de deploy
