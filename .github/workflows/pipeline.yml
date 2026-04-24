@@ -38,6 +38,7 @@ jobs:
           echo "Usuário: $DB_USER"
           echo "Senha: $DB_PASSWORD"
           echo "Observe que a senha será mascarada nos logs!
+          echo "vamos"
 
       # Step 4: Usar secret em um token de deploy
       - name: Preparar deploy com tokens
