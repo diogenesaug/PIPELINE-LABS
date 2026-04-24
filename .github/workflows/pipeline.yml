@@ -29,13 +29,13 @@ jobs:
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USER: ${{ secrets.DB_USER }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           echo "Configurando conexão com banco de dados..."
           echo "Host: $DB_HOST"
           echo "Porta: $DB_PORT"
-          echo "Usuário: $DB_USER"
+          echo "Usuário: $DB_USERNAME"
           echo "Senha: $DB_PASSWORD"
           echo "Observe que a senha será mascarada nos logs!
           echo "vamos"
