@@ -13,8 +13,7 @@ jobs:
     steps:
       # Step 1: Checkout do código
       - name: Fazer checkout do código
-        uses: actions/checkout@v4
-      
+        uses: actions/checkout@v5    
         # Step 2: Demonstrar uso de secrets em variáveis de ambiente
         - name: Configurar Credenciais da API
           env:
