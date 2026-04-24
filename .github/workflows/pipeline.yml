@@ -47,7 +47,7 @@ jobs:
         run: |
           echo "Preparando deploy com token de autenticação..."
           echo "Token de deploy: $DEPLOY_TOKEN"
-          echo "GitHub automaticamente mascara o valor real do token!
+          echo "GitHub automaticamente mascara o valor real do token!"
       
       # step 5: Demonstrar que secrets não são expostos em logs
       - name: Verificar segurança dos secrets
