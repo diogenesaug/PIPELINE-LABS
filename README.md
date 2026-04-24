@@ -144,3 +144,73 @@ jobs:
         echo "Coletando resultados de todos os jobs da matrix..."
         sleep 5
         echo "Todos os testes da matrix foram executados."
+
+
+name: Demonstação de Variáveis de Ambiente
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+
+# Variáveis de ambiente no nível do Workflow
+env:
+  WORKFLOW_VAR: "Variável definida no nível do Workflow"
+  AMBIENTE: "Produção"
+  VERSAO_APP: "1.0.0"
+
+jobs:
+  demonstracao-variaveis:
+    runs-on: ubuntu-latest
+
+  # Variáveis de ambiente no nível do Job
+    env:
+      JOB_VAR: "Variável definida no nível do Job"
+      USUARIO: "devops_user"
+    
+    steps:
+      - name: Exibir Variáveis do Workflow
+        run: |
+          echo "=== Variáveis do Workflow ==="
+          echo "Variável do Workflow: ${{ env.WORKFLOW_VAR }}"
+          echo "Ambiente: ${{ env.AMBIENTE }}"
+          echo "Versão da Aplicação: ${{ env.VERSAO_APP }}"
+      
+      - name: Exibir Variáveis do Job
+        run: |
+          echo "=== Variáveis do Job ==="
+          echo "Variável do Job: ${{ env.JOB_VAR }}"
+          echo "Usuário: ${{ env.USUARIO }}"
+      
+      - name: Exibir Variáveis do Step
+        env:
+          STEP_VAR: "Variável definida no nível do Step"
+          MENSAGEM: "Este é um exemplo prático!"
+        run: |
+          echo "=== Variáveis do Step ==="
+          echo "Variável do Step: ${{ env.STEP_VAR }}"
+          echo "Mensagem: ${{ env.MENSAGEM }}"
+
+      - name: Combinar Variáveis de Diferentes Níveis
+        env:
+          STEP_ESPECIFICO: "step-value"
+        run: |
+          echo "=== Combinação de Variáveis ==="
+          echo "Workflow: ${{ env.WORKFLOW_VAR }}"
+          echo "Job: ${{ env.JOB_VAR }}"
+          echo "Step: ${{ env.STEP_ESPECIFICO }}"
+          echo "Todas acessíveis no mesmo contexto!"
+
+      - name: Minecraft 
+        env:
+          NOME_PROJETO: "lab-variaveis"  
+          TIMESTAMP: $(date +%Y-%m-%d-%H-%M-%S)
+          JAVA_EDITION: "Version 27.0.1"
+        run: |
+          echo "=== Exemplo Prático ==="
+          echo "Compilando projeto ${{ env.NOME_PROJETO }} na versão ${{ env.VERSAO_APP }}..."
+          echo "Data de build: ${{ env.TIMESTAMP }}"
+          echo  "Ambiente de deploy: ${{ env.AMBIENTE }}"
+          echo "Java edition: ${{ env.JAVA_EDITION }}"
+          echo "Versão: ${{ env.VERSAO_APP }}"

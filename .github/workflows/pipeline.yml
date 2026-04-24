@@ -1,4 +1,4 @@
-name: Demonstação de Variáveis de Ambiente
+name: Demo GitHub Secrets
 
 on:
   push:
@@ -6,63 +6,56 @@ on:
   workflow_dispatch:
 
 
-# Variáveis de ambiente no nível do Workflow
-env:
-  WORKFLOW_VAR: "Variável definida no nível do Workflow"
-  AMBIENTE: "Produção"
-  VERSAO_APP: "1.0.0"
-
 jobs:
-  demonstracao-variaveis:
+  demonstrar-secrets:
     runs-on: ubuntu-latest
-
-  # Variáveis de ambiente no nível do Job
-    env:
-      JOB_VAR: "Variável definida no nível do Job"
-      USUARIO: "devops_user"
     
     steps:
-      - name: Exibir Variáveis do Workflow
-        run: |
-          echo "=== Variáveis do Workflow ==="
-          echo "Variável do Workflow: ${{ env.WORKFLOW_VAR }}"
-          echo "Ambiente: ${{ env.AMBIENTE }}"
-          echo "Versão da Aplicação: ${{ env.VERSAO_APP }}"
-      
-      - name: Exibir Variáveis do Job
-        run: |
-          echo "=== Variáveis do Job ==="
-          echo "Variável do Job: ${{ env.JOB_VAR }}"
-          echo "Usuário: ${{ env.USUARIO }}"
-      
-      - name: Exibir Variáveis do Step
+      # Step 1: Checkout do código
+      - name: Fazer checkout do código
+        uses: actions/checkout@v5    
+        # Step 2: Demonstrar uso de secrets em variáveis de ambiente
+      - name: Configurar Credenciais da API
         env:
-          STEP_VAR: "Variável definida no nível do Step"
-          MENSAGEM: "Este é um exemplo prático!"
+          API_KEY: ${{ secrets.API_KEY }}
+          API_URL: ${{ secrets.API_URL }}
         run: |
-          echo "=== Variáveis do Step ==="
-          echo "Variável do Step: ${{ env.STEP_VAR }}"
-          echo "Mensagem: ${{ env.MENSAGEM }}"
+          echo "Configurando conexão com API externa..."
+          echo "URL da API: $API_URL"
+          echo "API Key está configurada: $API_KEY:+SIM"
+        
+      # Step 3: Simular conexão com banco de dados usando secrets
+      - name: Conectar ao Banco de dados
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          echo "Configurando conexão com banco de dados..."
+          echo "Host: $DB_HOST"
+          echo "Porta: $DB_PORT"
+          echo "Usuário: $DB_USER"
+          echo "Senha: $DB_PASSWORD"
+          echo "Observe que a senha será mascarada nos logs!
+          echo "vamos"
 
-      - name: Combinar Variáveis de Diferentes Níveis
+      # Step 4: Usar secret em um token de deploy
+      - name: Preparar deploy com tokens
         env:
-          STEP_ESPECIFICO: "step-value"
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
-          echo "=== Combinação de Variáveis ==="
-          echo "Workflow: ${{ env.WORKFLOW_VAR }}"
-          echo "Job: ${{ env.JOB_VAR }}"
-          echo "Step: ${{ env.STEP_ESPECIFICO }}"
-          echo "Todas acessíveis no mesmo contexto!"
-
-      - name: Minecraft 
+          echo "Preparando deploy com token de autenticação..."
+          echo "Token de deploy: $DEPLOY_TOKEN"
+          echo "GitHub automaticamente mascara o valor real do token!
+      
+      # step 5: Demonstrar que secrets não são expostos em logs
+      - name: Verificar segurança dos secrets
         env:
-          NOME_PROJETO: "lab-variaveis"  
-          TIMESTAMP: $(date +%Y-%m-%d-%H-%M-%S)
-          JAVA_EDITION: "Version 27.0.1"
+          SECRET_VALUE: ${{ secrets.SECRET_VALUE }}
         run: |
-          echo "=== Exemplo Prático ==="
-          echo "Compilando projeto ${{ env.NOME_PROJETO }} na versão ${{ env.VERSAO_APP }}..."
-          echo "Data de build: ${{ env.TIMESTAMP }}"
-          echo  "Ambiente de deploy: ${{ env.AMBIENTE }}"
-          echo "Java edition: ${{ env.JAVA_EDITION }}"
-          echo "Versão: ${{ env.VERSAO_APP }}"
+          echo "Segurança dos Secrets:"
+          echo "- Secrets nunca aparecem em logs (são substituídos por ***)"
+          echo "- Secrets não são acessíveis em forks do repositório"
+          echo "- Secrets só são expostos para workflows autorizados"
+          echo "- Você pode atualizar secrets sem alterar o código"
