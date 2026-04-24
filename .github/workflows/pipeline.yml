@@ -15,14 +15,14 @@ jobs:
       - name: Fazer checkout do código
         uses: actions/checkout@v5    
         # Step 2: Demonstrar uso de secrets em variáveis de ambiente
-        - name: Configurar Credenciais da API
-          env:
-            API_KEY: ${{ secrets.API_KEY }}
-            API_URL: ${{ secrets.API_URL }}
-          run: |
-            echo "Configurando conexão com API externa..."
-            echo "URL da API: $API_URL"
-            echo "API Key está configurada: $API_KEY:+SIM"
+      - name: Configurar Credenciais da API
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          API_URL: ${{ secrets.API_URL }}
+        run: |
+          echo "Configurando conexão com API externa..."
+          echo "URL da API: $API_URL"
+          echo "API Key está configurada: $API_KEY:+SIM"
         
       # Step 3: Simular conexão com banco de dados usando secrets
       - name: Conectar ao Banco de dados
