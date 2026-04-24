@@ -54,13 +54,15 @@ jobs:
           echo "Step: ${{ env.STEP_ESPECIFICO }}"
           echo "Todas acessíveis no mesmo contexto!"
 
-      - name: Usar variáveis em comandos práticos
+      - name: Minecraft 
         env:
           NOME_PROJETO: "lab-variaveis"  
           TIMESTAMP: $(date +%Y-%m-%d-%H-%M-%S)
+          JAVA_EDITION: "Version 27.0.1"
         run: |
           echo "=== Exemplo Prático ==="
           echo "Compilando projeto ${{ env.NOME_PROJETO }} na versão ${{ env.VERSAO_APP }}..."
           echo "Data de build: ${{ env.TIMESTAMP }}"
           echo  "Ambiente de deploy: ${{ env.AMBIENTE }}"
+          echo "Java edition: ${{ env.JAVA_EDITION }}"
           echo "Versão: ${{ env.VERSAO_APP }}"
