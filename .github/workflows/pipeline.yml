@@ -40,7 +40,7 @@ jobs:
           echo "Observe que a senha será mascarada nos logs!
 
       # Step 4: Usar secret em um token de deploy
-      - name: Preparar deploy com token
+      - name: Preparar deploy com tokens
         env:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
